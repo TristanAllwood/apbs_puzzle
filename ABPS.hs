@@ -5,12 +5,17 @@ import Control.Monad
 import Data.List
 
 solution = do
+  {- there are two numbers each between 2 and 99 inclusive. -}
+  {- call them a and b -}
   a <- [2..99]
   b <- [2..a]
 
   let p_0 a b = a * b
   let s_0 a b = a + b
 
+  {- there are two participants, p and s. -}
+  {- p only knows the product of a and b -}
+  {- s only knows the sum of a and b -}
   let p = p_0 a b
   let s = s_0 a b
 
@@ -28,7 +33,7 @@ solution = do
                  guard (ab_s == solutions)
   s_1 s
 
-  {- p says "I know what the numbers are" -}
+  {- p now says "I know what the numbers are" -}
   let p_2 p = do let ab_s = factors p
 
                  let solutions = do (a,b) <- ab_s
@@ -39,7 +44,7 @@ solution = do
 
   p_2 p
 
-  {- s says "I know what the numbers are" -}
+  {- s finally says "I know what the numbers are" -}
   let s_2 s = do let ab_s = components s
 
                  let solutions = do (a,b) <- ab_s
@@ -50,10 +55,11 @@ solution = do
 
   s_2 s
 
+  {- thus, the numbers are... -}
   return (a,b)
 
 single_solution :: [a] -> Bool
-single_solution [x] = True
+single_solution [_] = True
 single_solution _   = False
 
 multiple_solutions :: [a] -> Bool
