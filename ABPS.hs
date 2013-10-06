@@ -1,4 +1,3 @@
-{-# LANGUAGE RecordWildCards #-}
 module ABPS where
 
 import Control.Monad
@@ -10,50 +9,34 @@ solution = do
   a <- [2..99]
   b <- [2..a]
 
-  let p_0 a b = a * b
-  let s_0 a b = a + b
+  let p0 (a, b) = a * b
+  let s0 (a, b) = a + b
 
   {- there are two participants, p and s. -}
   {- p only knows the product of a and b -}
   {- s only knows the sum of a and b -}
-  let p = p_0 a b
-  let s = s_0 a b
+  let p = p0 (a, b)
+  let s = s0 (a, b)
 
   {- p says "I don't know a and b" -}
-  let p_1 p = do let p_ab's = factors p
-                 guard (multiple_solutions p_ab's)
-  p_1 p
+  let p1 = multiple_solutions . factors
+
+  guard (p1 p)
 
   {- s says "I know you don't know" -}
-  let s_1 s = do let ab_s = components s
-                 let solutions = do (a,b) <- ab_s
-                                    let p = p_0 a b
-                                    p_1 p
-                                    return (a,b)
-                 guard (ab_s == solutions)
-  s_1 s
+  let s1 = all (p1 . p0) . components
+
+  guard (s1 s)
 
   {- p now says "I know what the numbers are" -}
-  let p_2 p = do let ab_s = factors p
+  let p2 = single_solution . filter (s1 . s0) . factors
 
-                 let solutions = do (a,b) <- ab_s
-                                    let s = s_0 a b
-                                    s_1 s
-                                    return (a,b)
-                 guard (single_solution solutions)
-
-  p_2 p
+  guard (p2 p)
 
   {- s finally says "I know what the numbers are" -}
-  let s_2 s = do let ab_s = components s
+  let s2 = single_solution . filter (p2 . p0) . components
 
-                 let solutions = do (a,b) <- ab_s
-                                    let p = p_0 a b
-                                    p_2 p
-                                    return (a,b)
-                 guard (single_solution solutions)
-
-  s_2 s
+  guard (s2 s)
 
   {- thus, the numbers are... -}
   return (a,b)
