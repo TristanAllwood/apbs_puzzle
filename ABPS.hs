@@ -63,7 +63,7 @@ factors n = do
 
 components :: Int -> [(Int, Int)]
 components n = do
-  x <- [2..n]
+  x <- [2..(n `div` 2) + 1]
   let y = n - x
   guard (y >= x && y >= 2 && y <= 99)
   return (x,y)
