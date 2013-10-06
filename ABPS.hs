@@ -1,7 +1,6 @@
 module ABPS where
 
 import Control.Monad
-import Data.List
 
 solution = do
   {- there are two numbers each between 2 and 99 inclusive. -}
