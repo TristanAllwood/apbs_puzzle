@@ -6,20 +6,23 @@ module ABPS where
 {- there are two participants, p and s. -}
 {- p only knows the product of a and b -}
 {- s only knows the sum of a and b -}
-p0 (a, b) = a * b
-s0 (a, b) = a + b
+
+
+p0 (a, b) = factors (a * b)
+s0 (a, b) = components (a + b)
+{- p0 and s0 give the possible (a,b)'s for p and s. -}
 
 {- p says "I don't know a and b" -}
-p1 = multiple_solutions . factors . p0
+p1 = multiple_solutions . p0
 
 {- s says "I know you don't know" -}
-s1 = all p1 . components . s0
+s1 = all p1 . s0
 
 {- p now says "I know what the numbers are" -}
-p2 = single_solution . filter s1 . factors . p0
+p2 = single_solution . filter s1 . p0
 
 {- s finally says "I know what the numbers are" -}
-s2 = single_solution . filter p2 . components . s0
+s2 = single_solution . filter p2 . s0
 
 
 solution = [ ab | a <- [2..99], b <- [2..a],
