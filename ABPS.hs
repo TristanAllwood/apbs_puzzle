@@ -23,20 +23,24 @@ solution = do
 
   guard (p1 p)
 
+
   {- s says "I know you don't know" -}
   let s1 = all (p1 . p0) . components
 
   guard (s1 s)
+
 
   {- p now says "I know what the numbers are" -}
   let p2 = single_solution . filter (s1 . s0) . factors
 
   guard (p2 p)
 
+
   {- s finally says "I know what the numbers are" -}
   let s2 = single_solution . filter (p2 . p0) . components
 
   guard (s2 s)
+
 
   {- thus, the numbers are... -}
   return (a,b)
