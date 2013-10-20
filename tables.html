@@ -2,9 +2,15 @@
   <head>
 
     <style>
+
       body {
-        font-size: 120%;
         background: rgb(255,255,244);
+        width: 800px;
+        font-size: 130%;
+      }
+
+      div {
+        border: 1px solid rgba(80,80,80,0.2);
       }
 
       li {
@@ -13,13 +19,24 @@
       }
 
       ul {
-        margin-left: 0em;
-        padding-left: 0em;
+        margin: 0em;
+        padding: 0em;
+      }
+
+      .t {
+        font-family: monospace;
+        color: rgba(0,80,0, 0.8);
+        font-weight: bold;
+      }
+
+      .f {
+        font-family: monospace;
+        color: rgba(80,00,00, 0.8);
+        font-weight: bold;
       }
 
       table {
         border-collapse: collapse;
-        border: 1px solid rgba(80,80,80,0.2);
         display:inline;
         font-size: 80%;
         font-family: sans-serif;
@@ -27,9 +44,11 @@
       }
 
       td {
-        min-width: 100px;
-        vertical-align: text-top;
+        vertical-align: top;
         text-align:left;
+        margin: 0;
+        padding: 0;
+        border: 0;
       }
 
       tbody > tr:nth-child(2n) {
@@ -42,7 +61,6 @@
 
       th {
         text-align:left;
-        padding-bottom: 1em;
       }
 
       thead {
@@ -119,7 +137,7 @@
 
       function build_a_and_b(elem, ab) {
         var code = $('<code></code>');
-        code.append('(' + ab[0] + ', ' + ab[1] + ')');
+        code.append('(' + ab[0] + ',' + ab[1] + ')');
         elem.append(code);
       }
 

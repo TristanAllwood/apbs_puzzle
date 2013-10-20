@@ -22,14 +22,14 @@ data Value = AandB (Int, Int)
   deriving (Data, Typeable)
 
 p_table abs
-  = Table { titles = ["(a,b) are",   "p sees a * b", "p thinks (a,b) could be"]
+  = Table { titles = ["(a,b) are",   "p sees a*b", "p thinks (a,b) could be"]
           , rows   = [ [AandB (a,b), Value (a*b),    Several [AandB v | v <- p (a,b)] ]
                      | (a,b) <- abs
                      ]
           }
 
 s_table abs
-  = Table { titles = ["(a,b) are",   "s sees a + b", "s thinks (a,b) could be"]
+  = Table { titles = ["(a,b) are",   "s sees a+b", "s thinks (a,b) could be"]
           , rows   = [ [AandB (a,b), Value (a+b),    Several [AandB v | v <- s (a,b)] ]
                      | (a,b) <- abs
                      ]
@@ -43,7 +43,7 @@ p1_table abs
     pt = p_table abs
 
 s1_table abs
-  = Table { titles = ["(a,b) are", "s sees a + b",
+  = Table { titles = ["(a,b) are", "s sees a+b",
                       "s thinks what (a,b) could be and pretends to run p1",
                       "s knows p can only see multiple possibilities?"]
           , rows   = [ [ AandB (a,b), Value (a+b)
@@ -55,7 +55,7 @@ s1_table abs
           }
 
 p2_table abs
-  = Table { titles = [ "(a,b) are", "p sees a * b",
+  = Table { titles = [ "(a,b) are", "p sees a*b",
                        "p thinks what (a,b) could be and pretends to run s1",
                        "p knows s sees exactly one option?" ]
           , rows   = [ [ AandB (a,b), Value (a*b)
@@ -67,7 +67,7 @@ p2_table abs
           }
 
 s2_table abs
-  = Table { titles = [ "(a,b) are", "s sees a + b",
+  = Table { titles = [ "(a,b) are", "s sees a+b",
                        "s thinks what (a,b) could be and pretends to run p2",
                        "s knows p sees exactly one option?"]
           , rows   = [ [ AandB (a,b), Value (a+b)
