@@ -1,0 +1,182 @@
+<html>
+  <head>
+
+    <style>
+      body {
+        font-size: 120%;
+        background: rgb(255,255,244);
+      }
+
+      li {
+        display: inline;
+        margin-right: 0.5em;
+      }
+
+      ul {
+        margin-left: 0em;
+        padding-left: 0em;
+      }
+
+      table {
+        border-collapse: collapse;
+        border: 1px solid rgba(80,80,80,0.2);
+        display:inline;
+        font-size: 80%;
+        font-family: sans-serif;
+        width: 100%;
+      }
+
+      td {
+        min-width: 100px;
+        vertical-align: text-top;
+        text-align:left;
+      }
+
+      tbody > tr:nth-child(2n) {
+        background-color: rgba(160,160,160,0.2);
+      }
+
+      tbody > tr:nth-child(2n+1) {
+        background-color: rgba(220,220,220,0.2);
+      }
+
+      th {
+        text-align:left;
+        padding-bottom: 1em;
+      }
+
+      thead {
+        background-color: rgba(120,120,120,0.2);
+      }
+
+    </style>
+
+  </head>
+
+  <body>
+
+    <h1>p</h1>
+    <div id="p"></div>
+
+    <h1>s</h1>
+    <div id="s"></div>
+
+    <h1>p1</h1>
+    <div id="p1"></div>
+
+    <h1>s1</h1>
+    <div id="s1"></div>
+
+    <h1>p2</h1>
+    <div id="p2"></div>
+
+    <h1>s2</h1>
+    <div id="s2"></div>
+
+    <script src="jquery-1.10.2.min.js"></script>
+    <script src="p.js"></script>
+    <script src="s.js"></script>
+    <script src="p1.js"></script>
+    <script src="s1.js"></script>
+    <script src="p2.js"></script>
+    <script src="s2.js"></script>
+
+    <script>
+
+      function build_table(elem, table) {
+        var h_table = $('<table></table>');
+
+        var thead = $('<thead></thead>');
+        h_table.append(thead);
+
+        var head_row = $('<tr></tr>');
+        thead.append(head_row);
+        table.titles.forEach(function(title) {
+          var th = $('<th></th>');
+          th.append(title);
+          head_row.append(th);
+        });
+
+
+        var tbody = $('<tbody></tbody>');
+        h_table.append(tbody);
+
+        table.rows.forEach(function(row) {
+            var tr = $('<tr></tr>');
+            tbody.append(tr);
+            row.forEach(function(val) {
+              var td = $('<td></td>');
+              tr.append(td);
+
+              build_value(td, val);
+            });
+
+        });
+
+
+        elem.append(h_table);
+      }
+
+      function build_a_and_b(elem, ab) {
+        var code = $('<code></code>');
+        code.append('(' + ab[0] + ', ' + ab[1] + ')');
+        elem.append(code);
+      }
+
+      function build_val(elem, v) {
+        var code = $('<code></code>');
+        code.append(v);
+        elem.append(code);
+      }
+
+      function build_several(elem, vals) {
+        var list = $('<ul></ul>');
+        elem.append(list);
+        vals.forEach(function(val) {
+            var li = $('<li></li> ');
+            build_value(li, val);
+            list.append(li);
+        });
+      }
+
+      function build_truth(elem, t) {
+        if(t) {
+          elem.append($('<span class="t">True</span>'));
+        } else {
+          elem.append($('<span class="f">False</span>'));
+        }
+      }
+
+      function build_value(elem, val) {
+        if ("AandB" in val) {
+          build_a_and_b(elem, val["AandB"]);
+        } else if ("Value" in val) {
+          build_val(elem, val["Value"]);
+
+        } else if ("Several" in val) {
+          build_several(elem, val["Several"]);
+
+        } else if ("NestedTable" in val) {
+          build_table(elem, val["NestedTable"]);
+
+        } else if ("Truth" in val) {
+          build_truth(elem, val["Truth"]);
+        }
+      }
+
+      function ready() {
+        build_table($('#p'),  p_table );
+        build_table($('#s'),  s_table );
+        build_table($('#p1'), p1_table );
+        build_table($('#s1'), s1_table );
+        build_table($('#p2'), p2_table );
+        build_table($('#s2'), s2_table );
+      }
+
+      $(ready);
+
+
+    </script>
+  </body>
+
+</html>
